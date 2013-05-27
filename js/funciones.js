@@ -3,12 +3,12 @@ buscar_mb = function() {
     var album = $('#formBusqueda input[name=album]').val();
     if ((artista + album).length === 0) {
             $('<p><div class="alert alert-error">\
-                <a class="close" data-dismiss="alert" href="#">&times;</a><strong>Error:</strong> Introduzca datos de búsqueda\
+            <a class="close" data-dismiss="alert" href="#">&times;</a><strong>Error:</strong> Introduzca datos de búsqueda\
             </div></p>')
                 .hide()
-                .appendTo('#formBusqueda')
+                .insertAfter('#formBusqueda')
                 .show('slow')
-                .fadeOut(2000);
+                .fadeOut(2000, function() { $(this).remove(); });
     }
     else {
         $.post('./php/musicbrainz.php',$('#formBusqueda').serialize(),function(data){
@@ -19,27 +19,33 @@ buscar_mb = function() {
                 <a class="close" data-dismiss="alert" href="#">&times;</a>No hay resultados\
                 </div></p>')
                     .hide()
-                    .appendTo('#formBusqueda')
+                    .insertAfter('#formBusqueda')
                     .show('slow')
-                    .fadeOut(2000);
+                    .fadeOut(2000, function() { $(this).remove(); });
             }
             else {
                 //Hay resultados
-                var str1='<p><table id="tablaBusquedaRes" class="table table-striped">\
+                $('#resultadosBusquedaCD').remove();
+                var str1='<p><table id="resultadosBusquedaCD" class="table table-bordered table-striped table-condensed">\
                         <thead><tr><th>ID</th><th>Artista</th><th>Álbum</th><th>Categoría</th><th>Año</th><th>Pistas</th></tr></thead>\
                         <tbody>';
                 $.each(results,function(index,result) {
                     str1+='<tr>'+
-                        '<td>'+$(result).attr('id')+'</td>'+
-                        '<td>'+$(result).find('artist').text()+'</td>'+
-                        '<td>'+$(result).find('title').text()+'</td>'+
-                        '<td>'+$(result).find('category').text()+'</td>'+
-                        '<td>'+$(result).find('year').text()+'</td>'+
-                        '<td>'+$(result).find('track-list').attr('count')+'</td></tr>';
+                        '<td class="idAlbum">'+$(result).attr('id')+'</td>'+
+                        '<td class="artistaAlbum">'+$(result).find('artist').text()+'</td>'+
+                        '<td class="tituloAlbum">'+$(result).find('title').text()+'</td>'+
+                        '<td class="catAlbum">'+$(result).find('category').text()+'</td>'+
+                        '<td class="anyoAlbum">'+$(result).find('year').text()+'</td>'+
+                        '<td class="tracksAlbum">'+$(result).find('track-list').attr('count')+'</td></tr>';
                 });
                 str1+='</tbody></table>';
-                $(str1).appendTo('#formBusqueda');
+                $(str1).insertAfter('#formBusqueda');
+                $('#resultadosBusquedaCD tr').click(obtenerDatos);
             }
         },'xml');
     }
+}
+obtenerDatos = function() {
+    var discoID = $(this).find('td.idAlbum').text();
+    alert(discoID);
 }

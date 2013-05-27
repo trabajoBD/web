@@ -1,0 +1,9 @@
+@media only screen and (max-width: 800px) {
+	table#resultadosBusquedaCD td:nth-child(1), 
+	table#resultadosBusquedaCD th:nth-child(1) {display: none;}
+	table#resultadosBusquedaCD td:nth-child(4), 
+	table#resultadosBusquedaCD th:nth-child(4) {display: none;}
+}
+table#resultadosBusquedaCD tr:hover {
+    cursor: pointer;
+}
