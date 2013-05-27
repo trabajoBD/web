@@ -1,0 +1,60 @@
+
+<html>
+  
+  <head>
+    <title>Videoclub YoViendo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap.css">
+    <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
+    <script src="https://app.divshot.com/js/jquery.min.js"></script>
+    <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
+    <script src="./js/funciones.js"></script>
+  </head>
+  
+  <body>
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Videoclub YoViendo</a>
+          <div class="navbar-content">
+            <ul class="nav  pull-right">
+              <li class="active">
+                <a href="#">Añadir CD</a> 
+              </li>
+              <li>
+                <a href="#">Home</a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="page-header">
+        <h1>Añadir CD a la base de datos</h1>
+      </div>
+      <p class="lead">Desde esta interfaz podrás añadir CDs a la base de datos, se utiliza como
+        apoyo la búsqueda de
+        <i>MusicBrainz</i> a la que se accede a través de su API &nbsp;web usando los parámetros
+        del campo de búsqueda</p>
+      <div class="row">
+        <div class="span12">
+          <div class="well">
+            <h4>Formulario de búsqueda</h4>
+            <form id="formBusqueda" action="javascript:buscar_mb();" class="form-inline" >
+                <input name="artista" class="span5" type="text"  placeholder="Artista: Rammstein, Madonna, Iron Maiden..." >
+                <input name="album" class="span6" type="text"  placeholder="Álbum: Sensucht, The number of the beast...">
+                <button type="submit" class="btn btn-primary"> <i class="icon-search icon-white"></i></button>
+            </form>
+          </div>
+          <div class="well">
+            <h4>Datos a añadir</h4>
+            <p>#form2</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </body>
+
+</html>
