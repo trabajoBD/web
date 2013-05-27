@@ -3,9 +3,11 @@
     //Parámetros POST:
     //artista: Artista
     //album: Álbum
-    if isset($_POST('artista'))
-        var artista = $_POST('artista');
-    if isset($_POST('album'))
-        var album = $_POST('album');
-    
+    if (isset($_POST['artista'])) {
+        $artista = $_POST['artista'];
+    }
+    if (isset($_POST['album'])) {
+        $album = $_POST['album'];
+    }
+    include('salidaejemplo.xml');
 ?>
