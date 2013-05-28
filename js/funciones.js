@@ -46,6 +46,10 @@ buscar_mb = function() {
     }
 }
 obtenerDatos = function() {
-    var discoID = $(this).find('td.idAlbum').text();
-    alert(discoID);
+    var datosEnvio = new Object;
+    datosEnvio['discoID'] = $(this).find('td.idAlbum').text();
+    datosEnvio['discoCat'] = $(this).find('td.catAlbum').text();
+    $.post('./php/freedb.php',datosEnvio,function(data){
+        document.writeln(data);
+    },'json');
 }
