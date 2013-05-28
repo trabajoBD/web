@@ -4,6 +4,20 @@
 	table#resultadosBusquedaCD td:nth-child(4), 
 	table#resultadosBusquedaCD th:nth-child(4) {display: none;}
 }
+@media only screen and (max-width: 400px) {
+	table#resultadosBusquedaCD td:nth-child(1), 
+	table#resultadosBusquedaCD th:nth-child(1) {display: none;}
+	table#resultadosBusquedaCD td:nth-child(4), 
+	table#resultadosBusquedaCD th:nth-child(4) {display: none;}
+	table#resultadosBusquedaCD td:nth-child(5), 
+	table#resultadosBusquedaCD th:nth-child(5) {display: none;}
+	table#resultadosBusquedaCD td:nth-child(6), 
+	table#resultadosBusquedaCD th:nth-child(6) {display: none;}
+}
 table#resultadosBusquedaCD tr:hover {
     cursor: pointer;
+}
+span.numeroTrack {
+	margin: 0px 20px 20px 0px;
+	font-weight: bold;
 }

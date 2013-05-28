@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
   
   <head>
@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://app.divshot.com/js/jquery.min.js"></script>
     <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
+    <script src="./js/jquery.scrollTo-min.js"></script>
     <script src="./js/funciones.js"></script>
+    
   </head>
   
   <body>
@@ -39,21 +41,50 @@
       </div>
       <p class="lead">Desde esta interfaz podrás añadir CDs a la base de datos, se utiliza como
         apoyo la búsqueda de
-        <i>MusicBrainz</i> a la que se accede a través de su API &nbsp;web usando los parámetros
-        del campo de búsqueda</p>
+        <i>MusicBrainz</i> a la que se accede a través de su API web usando los parámetros
+        del campo de búsqueda, la importación de los detalles de cada álbum se realiza a través de <i>freeDB</i></p>
       <div class="row">
         <div class="span12">
-          <div class="well">
-            <h4>Formulario de búsqueda</h4>
+          <div class="">
+            <h1>Formulario de búsqueda</h1>
             <form id="formBusqueda" action="javascript:buscar_mb();" class="form-inline" >
                 <input name="artista" class="span5" type="text"  placeholder="Artista: Rammstein, Madonna, Iron Maiden..." >
-                <input name="album" class="span6" type="text"  placeholder="Álbum: Sensucht, The number of the beast...">
-                <button type="submit" class="btn btn-primary"> <i class="icon-search icon-white"></i></button>
+                <input name="album" class="span5" type="text" placeholder="Álbum: Sensucht, The number of the beast...">
+                <button type="submit" class="btn btn-primary"> Buscar <i class="icon-search icon-white"></i></button>
             </form>
           </div>
-          <div class="well">
-            <h4>Datos a añadir</h4>
-            <p>#form2</p>
+          <div class="">
+            <h1>Formulario de introducción</h1>
+            <form id="formIntrod" action="javascript:function(){};" class="form-inline" >
+                <fieldset><legend>Datos generales</legend>
+                <input name="artista" class="span3" type="text"  placeholder="Artista" >
+                <input name="album" class="span3" type="text" placeholder="Álbum">
+                <input name="anho" class="span2" type="text" placeholder="Año">
+                <div class="input-append">
+                  <input class="span2" name="duracion" type="text"  placeholder="Duración"><span class="add-on">seg.</span>
+                </div>
+                <input name="genero" class="span2" type="text" placeholder="Género">
+                <fieldset><legend>Pistas</legend>
+                <div class="controls well">
+                  <span class="control-label numeroTrack">Pista 1</span>
+                  <input name="pistaArtista" class="span3" type="text" placeholder="Artista">
+                  <input name="pistaTitulo" class="span3" type="text" placeholder="Título">
+                  <input name="pistaDuracion" class="span2" type="text" placeholder="Duración (segundos)">
+                </div>
+                <div class="controls well">
+                  <span class="control-label numeroTrack">Pista 2</span>
+                  <input name="pistaArtista" class="span3" type="text" placeholder="Artista">
+                  <input name="pistaTitulo" class="span3" type="text" placeholder="Título">
+                  <input name="pistaDuracion" class="span2" type="text" placeholder="Duración (segundos)">
+                </div>
+                <button class="btn btn-primary btn-large ">Añadir nueva pista <i class="icon-plus icon-white"></i></button>
+                <button class="btn btn-primary btn-large">Quitar última pista <i class="icon-minus icon-white"></i></button>
+                </fieldset>
+                <div class="form-actions">
+                  <button type="submit" class="btn btn-success btn-large">Guardar cambios <i class="icon-pencil icon-white"></i></button>
+                  <button class="btn btn-danger btn-large">Resetear formulario <i class="icon-fast-backward icon-white"></i></button>
+                </div>
+            </form>
           </div>
         </div>
       </div>

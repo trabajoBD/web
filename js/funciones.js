@@ -1,3 +1,7 @@
+jQuery.fn.reset = function () {
+  $(this).each (function() { this.reset(); });
+}
+
 buscar_mb = function() {
     var artista = $('#formBusqueda input[name=artista]').val();
     var album = $('#formBusqueda input[name=album]').val();
@@ -47,9 +51,16 @@ buscar_mb = function() {
 }
 obtenerDatos = function() {
     var datosEnvio = new Object;
+    var fila = $(this);
     datosEnvio['discoID'] = $(this).find('td.idAlbum').text();
     datosEnvio['discoCat'] = $(this).find('td.catAlbum').text();
     $.post('./php/freedb.php',datosEnvio,function(data){
-        document.writeln(data);
+        $('#formIntrod').reset();
+        $('#formIntrod input[name=artista]').val($(fila).find('td.artistaAlbum').text());
+        $('#formIntrod input[name=album]').val($(fila).find('td.tituloAlbum').text());
+        $('#formIntrod input[name=anho]').val(data.dyear);
+        $('#formIntrod input[name=duracion]').val(data.discolength);
+        $('#formIntrod input[name=genero]').val(data.dgenre);
+        $.scrollTo($('#formIntrod').parent(),800);
     },'json');
 }
