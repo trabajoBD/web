@@ -82,6 +82,21 @@ obtenerDatos = function() {
     },'json');
 };
 
+
+enviarDisco = function() {
+    var datosEnvio = new Object;
+    datosEnvio['artista'] = $('#datosgen input[name=artista]').val();
+    datosEnvio['album'] = $('#datosgen input[name=album]').val();
+    datosEnvio['anho'] = $('#datosgen input[name=anho]').val();
+    datosEnvio['duracion'] = $('#datosgen input[name=duracion]').val();
+    datosEnvio['genero'] = $('#datosgen input[name=genero]').val();
+    $('#guardarCambios').attr("disabled", true);
+    $.post('./php/insertarDisco.php',datosEnvio,function(data) {
+        console.log(data);
+        $('#guardarCambios').attr("disabled", false);
+    });
+}
+
 $(function() {
     $('#anhadirPista').click(function () {
         $('<div class="controls well reseteable">\
@@ -99,18 +114,5 @@ $(function() {
     $('#resetearFormulario').click(function() {
         $('#formIntrod').reset()
     });
+    $('#guardarCambios').click(enviarDisco);
 });
-
-enviarDisco = function() {
-    var datosEnvio = new Object;
-    datosEnvio['artista'] = $('#datosgen input[name=artista]').val();
-    datosEnvio['album'] = $('#datosgen input[name=album]').val();
-    datosEnvio['anho'] = $('#datosgen input[name=anho]').val();
-    datosEnvio['duracion'] = $('#datosgen input[name=duracion]').val();
-    datosEnvio['genero'] = $('#datosgen input[name=genero]').val();
-    $('#guardarCambios').attr("disabled", true);
-    $.post('./php/insertarDisco.php',datosEnvio,function(data) {
-        console.log(data);
-        $('#guardarCambios').attr("disabled", false);
-    });
-}

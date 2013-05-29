@@ -5,7 +5,7 @@
     $anho = $_POST['anho'];
     $duracion = $_POST['duracion'];
     $genero = $_POST['genero'];
-    $mysqli = new mysqli("localhost", "userweb01234", "EXMGvRp4aMNYyKyn", "videoclub");
+    $mysqli = new mysqli("localhost", "frasolmun", "OdsLxOdR7CJGu2z7hy4p", "frasolmun");
     //Artículo
     $query= "INSERT INTO `articulo`(`nombre`, `descripcion`, `preciooffline`, `precioonline`, `disponibleonline`, `disponibleoffline`, `imagen`) VALUES ".
             "('".$artista." - ".$album."','',0,0,0,0,'')";
