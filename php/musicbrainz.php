@@ -30,4 +30,5 @@
             'title:' . $album)
         ));
     print($salida);
+    
 ?>

@@ -18,6 +18,7 @@ table#resultadosBusquedaCD tr:hover {
     cursor: pointer;
 }
 span.numeroTrack {
-	margin: 0px 20px 20px 0px;
+	margin: 5px 20px 20px 0px;
 	font-weight: bold;
+	vertical-align: middle !important;
 }
