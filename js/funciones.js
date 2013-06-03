@@ -2,6 +2,14 @@ jQuery.fn.reset = function () {
   $(this).each(function() { this.reset(); });
   $(this).find('.reseteable:not(:first-of-type)').remove();
 };
+function secondsToTime(secs,fmt)
+{
+    // http://stackoverflow.com/questions/3733227/javascript-seconds-to-minutes-and-seconds
+    var date = new Date(null);
+    date.setSeconds(secs);
+    var time = date.toTimeString().substr(0, (fmt==1? 8 : 5));
+    return(time);
+}
 
 buscar_mb = function() {
     var artista = $('#formBusqueda input[name=artista]').val();
@@ -90,6 +98,14 @@ enviarDisco = function() {
     datosEnvio['anho'] = $('#datosgen input[name=anho]').val();
     datosEnvio['duracion'] = $('#datosgen input[name=duracion]').val();
     datosEnvio['genero'] = $('#datosgen input[name=genero]').val();
+    datosEnvio['arrayTracks'] = [];
+    $('#pistas div.controls').each( function(index,obj) {
+        datosEnvio['arrayTracks'].push([index,
+                                        $(obj).find('input[name=pistaArtista]').val(),
+                                        $(obj).find('input[name=pistaTitulo]').val(),
+                                        $(obj).find('div input[name=pistaDuracion]').val()]
+                                       );
+    });
     $('#guardarCambios').attr("disabled", true);
     $.post('./php/insertarDisco.php',datosEnvio,function(data) {
         console.log(data);
@@ -115,4 +131,56 @@ $(function() {
         $('#formIntrod').reset()
     });
     $('#guardarCambios').click(enviarDisco);
+    $('#ultimosCds').each(function() {
+        $.get('./php/ultimosDiscos.php',function(data) {
+            obj = $.parseJSON(data);
+            $(obj.datosgen).each(function(index,objact) {
+                $('#ultimosCds').append($('\
+                    <div class="span3 cd well">\
+                        <h2 class="text-info nombreDisco">The Number of the Beast</h2>\
+                        <h3 class="text-info grupoDisco">Iron Maiden</h3>\
+                        <span class="label label-info generoDisco">Rock</span>\
+                        <h5 class="anhoDisco">1982</h5>\
+                        <h5 class="duracionDisco">1h 36m</h5>\
+                        \
+                        <table class="table table-bordered table-striped table-condensed">\
+                            <thead><tr><th>#</th><th>Artista</th><th>Título</th><th>Duración</th></tr></thead>\
+                            <tbody>\
+                            </tbody>\
+                        </table>\
+                    </div>'));
+                $('#ultimosCds div.cd:last-of-type h2.nombreDisco').html(objact.album);
+                $('#ultimosCds div.cd:last-of-type h3.grupoDisco').html(objact.artista);
+                $('#ultimosCds div.cd:last-of-type span.generoDisco').html(objact.genero);
+                $('#ultimosCds div.cd:last-of-type h5.anhoDisco').html(objact.anho);
+                $('#ultimosCds div.cd:last-of-type h5.duracionDisco').html(secondsToTime(objact.duracion,1));
+            });
+            idproducto=0;
+            marco=-1;
+            $(obj.datostracks).each(function(index,objact) {
+                if (objact.idproducto != idproducto) marco+=1;
+                idproducto = objact.idproducto;
+                $($('#ultimosCds div.cd')[marco]).find('tbody').append($('<tr><td>' + objact.numero +'</td><td>'+ objact.artista +'</td><td>'+ objact.titulo +'</td><td>'+ objact.duracion+'</td></tr>'));;
+            });
+        })
+    });
 });
+
+/*
+<div class="span3 cd well">
+    <h2 class="text-info nombreDisco">The Number of the Beast</h2>
+    <h3 class="text-info grupoDisco">Iron Maiden</h3>
+    <span class="label label-info generoDisco">Rock</span>
+    <h5 class="anhoDisco">1982</h5>
+    <h5 class="duracionDisco">1h 36m</h5>
+    
+    <table class="table table-bordered table-striped table-condensed">
+        <thead><tr><th>#</th><th>Artista</th><th>Título</th><th>Duración</th></tr></thead>
+        <tbody>
+            <tr><td>1</td><td>Iron Maiden</td><td>From whom the bell tols and this is my name you know brother</td><td>01:02</td></tr>
+            <tr><td>2</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
+            <tr><td>3</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
+            <tr><td>1</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
+        </tbody>
+    </table>
+</div>*/
