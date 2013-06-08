@@ -22,3 +22,12 @@ span.numeroTrack {
 	font-weight: bold;
 	vertical-align: middle !important;
 }
+div.navbar li:hover {
+	background-color: rgb(215,215,215);
+}
+div.cd h2.nombreDisco{
+	font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans serif;
+}
+div.cd h3.grupoDisco {
+	font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}

@@ -21,8 +21,8 @@
           <a class="brand" href="#">Videoclub YoViendo</a>
           <div class="navbar-content">
             <ul class="nav  pull-right">
-              <li class="active">
-                <a href="#">Home</a> 
+              <li>
+                <a href="index.html">Home</a> 
               </li>
               <li>
                 <a href="anhadircd.html">Añadir CD</a> 
@@ -30,8 +30,8 @@
               <li>
                 <a href="ultimoscds.html">Últimos CDs</a> 
               </li>
-              <li>
-                <a href="anhadirpelicula.html">Añadir película</a> 
+              <li class="active">
+                <a href="#">Añadir película</a> 
               </li>
             </ul>
           </div>
@@ -40,14 +40,18 @@
     </div>
     <div class="container">
       <div class="page-header">
-        <h1>Página principal de administración</h1>
+        <h1>Añadir película</h1>
       </div>
-      <p class="lead">Bienvenido a la página de administración del videoclub <i><font size="+1">YoViendo</font></i>.<br>
-      Utilice el menú superior para acceder a las distintas secciones del panel de administración de contenidos.<br>
-      La web es accesible tanto desde móvil como desde PC.</p>
+      <p class="lead">Desde esta sección podrás añadir una película, la web utiliza como ayudante una consulta a la base de datos de películas calificades del <i>Ministerio de educación, cultura y deporte</i></p>
       <div class="row">
         <div class="span12">
- 
+            <div>
+            <form id="formBusquedaPeli" action="javascript:buscar_mb();" class="form-inline" >
+              <legend><h1>Formulario de búsqueda</h1></legend>
+                <input name="pelicula" class="span9" type="text" placeholder="Nombre de la película: Troya, El señor de los anillos..." >
+                <button type="submit" class="btn btn-primary span2 pull-right"> Buscar <i class="icon-search icon-white"></i></button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

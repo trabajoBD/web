@@ -2,12 +2,14 @@ jQuery.fn.reset = function () {
   $(this).each(function() { this.reset(); });
   $(this).find('.reseteable:not(:first-of-type)').remove();
 };
+
 function secondsToTime(secs,fmt)
 {
     // http://stackoverflow.com/questions/3733227/javascript-seconds-to-minutes-and-seconds
     var date = new Date(null);
     date.setSeconds(secs);
-    var time = date.toTimeString().substr(0, (fmt==1? 8 : 5));
+    var time = date.toTimeString().split(" ")[0];
+    if (fmt==0) time = time.substring(3,8);
     return(time);
 }
 
@@ -108,7 +110,6 @@ enviarDisco = function() {
     });
     $('#guardarCambios').attr("disabled", true);
     $.post('./php/insertarDisco.php',datosEnvio,function(data) {
-        console.log(data);
         $('#guardarCambios').attr("disabled", false);
     });
 }
@@ -134,7 +135,7 @@ $(function() {
     $('#ultimosCds').each(function() {
         $.get('./php/ultimosDiscos.php',function(data) {
             obj = $.parseJSON(data);
-            $(obj.datosgen).each(function(index,objact) {
+            $(obj).each(function(index,objact) {
                 $('#ultimosCds').append($('\
                     <div class="span3 cd well">\
                         <h2 class="text-info nombreDisco">The Number of the Beast</h2>\
@@ -154,15 +155,11 @@ $(function() {
                 $('#ultimosCds div.cd:last-of-type span.generoDisco').html(objact.genero);
                 $('#ultimosCds div.cd:last-of-type h5.anhoDisco').html(objact.anho);
                 $('#ultimosCds div.cd:last-of-type h5.duracionDisco').html(secondsToTime(objact.duracion,1));
+                $(objact.datostracks).each(function(index2,objact2) {
+                    $('#ultimosCds div.cd:last-of-type').find('tbody').append($('<tr><td>' + objact2.numero +'</td><td>'+ objact2.artista +'</td><td>'+ objact2.titulo +'</td><td>'+ secondsToTime(objact2.duracion,0)+'</td></tr>'));
+                });
             });
-            idproducto=0;
-            marco=-1;
-            $(obj.datostracks).each(function(index,objact) {
-                if (objact.idproducto != idproducto) marco+=1;
-                idproducto = objact.idproducto;
-                $($('#ultimosCds div.cd')[marco]).find('tbody').append($('<tr><td>' + objact.numero +'</td><td>'+ objact.artista +'</td><td>'+ objact.titulo +'</td><td>'+ objact.duracion+'</td></tr>'));;
-            });
-        })
+        });
     });
 });
 
