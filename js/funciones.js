@@ -41,7 +41,7 @@ buscar_mb = function() {
             else {
                 //Hay resultados
                 $('#resultadosBusquedaCD').remove();
-                var str1='<p><table id="resultadosBusquedaCD" class="table table-bordered table-striped table-condensed">\
+                var str1='<table id="resultadosBusquedaCD" class="table table-bordered table-striped table-condensed">\
                         <thead><tr><th>ID</th><th>Artista</th><th>Álbum</th><th>Categoría</th><th>Año</th><th>Pistas</th></tr></thead>\
                         <tbody>';
                 $.each(results,function(index,result) {
@@ -161,23 +161,58 @@ $(function() {
             });
         });
     });
+    $('#b_buscaMCU').click(function() {
+        var buscar = $(this).parent().find('input[name=pelicula]').val();
+        if (buscar.length === 0) {
+             $('<p><div class="alert alert-error">\
+            <a class="close" data-dismiss="alert" href="#">&times;</a><strong>Error:</strong> Introduzca datos de búsqueda\
+            </div></p>')
+                .hide()
+                .insertAfter('#formBusquedaPeli')
+                .show('slow')
+                .fadeOut(2000, function() { $(this).remove(); });
+        }
+        else {
+            $.post('./php/mcu.php',"pelicula="+buscar,function(data){
+                if (data.length === 0) {
+                    //No hay resultados
+                    $('<p><div class="alert">\
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>No hay resultados\
+                    </div></p>')
+                        .hide()
+                        .insertAfter('#formBusqueda')
+                        .show('slow')
+                        .fadeOut(2000, function() { $(this).remove(); });
+                }
+                else {
+                    //Hay resultados
+                    $('#pestanhaMCU').remove();
+                    var str1='<div id="pestanhaMCU"><div class="cabeceraMCU"><span>Resultados MCU</span></div><table id="resultadosBusquedaMCU" class="table table-bordered table-striped table-condensed">\
+                            <thead><tr><th>Expediente</th><th>Título orig.</th><th>Título com.</th><th>Distribuidora</th><th>Calificación</th><th>Fecha calif. 1</th><th>Fecha calif. 2</th></tr></thead>\
+                            <tbody>';
+                    $.each(data,function(index,result) {
+                        str1+='<tr>'+
+                            '<td class="expediente">'+result['expediente']+'</td>'+
+                            '<td class="titOrig">'+result['titulooriginal']+'</td>'+
+                            '<td class="titCom">'+result['titulocomercial']+'</td>'+
+                            '<td class="distr">'+(result['distribuidora']!=null ? result['distribuidora'] : '')+'</td>'+
+                            '<td class="calif">'+(result['calificacion']!=null ? result['calificacion'] : '')+'</td>'+
+                            '<td class="fcalif1">'+result['fechacal1']+'</td>'+
+                            '<td class="fcalif2">'+(result['fechacal2']!='0000-00-00' ? result['fechacal2'] : '')+'</td></tr>';
+                    });
+                    str1+='</tbody></table></div></div>';
+                    $(str1).insertAfter('#formBusquedaPeli');
+                    //$('#resultadosBusquedaCD tr').click(obtenerDatos);
+                    $('div.cabeceraMCU').click(function() {
+                        $('#resultadosBusquedaMCU').slideToggle("slow");
+                    });
+                    $('#resultadosBusquedaMCU tbody tr').each(function(index,object) {
+                        $(object).click(function() {
+                            alert($(this).find('td.expediente').text());
+                        });
+                    });
+                }   
+        },'json');
+        }
+    })
 });
-
-/*
-<div class="span3 cd well">
-    <h2 class="text-info nombreDisco">The Number of the Beast</h2>
-    <h3 class="text-info grupoDisco">Iron Maiden</h3>
-    <span class="label label-info generoDisco">Rock</span>
-    <h5 class="anhoDisco">1982</h5>
-    <h5 class="duracionDisco">1h 36m</h5>
-    
-    <table class="table table-bordered table-striped table-condensed">
-        <thead><tr><th>#</th><th>Artista</th><th>Título</th><th>Duración</th></tr></thead>
-        <tbody>
-            <tr><td>1</td><td>Iron Maiden</td><td>From whom the bell tols and this is my name you know brother</td><td>01:02</td></tr>
-            <tr><td>2</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
-            <tr><td>3</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
-            <tr><td>1</td><td>Iron Maiden</td><td>S1</td><td>01:02</td></tr>
-        </tbody>
-    </table>
-</div>*/
