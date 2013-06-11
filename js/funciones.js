@@ -180,7 +180,7 @@ $(function() {
                     <a class="close" data-dismiss="alert" href="#">&times;</a>No hay resultados\
                     </div></p>')
                         .hide()
-                        .insertAfter('#formBusqueda')
+                        .insertAfter('#formBusquedaPeli')
                         .show('slow')
                         .fadeOut(2000, function() { $(this).remove(); });
                 }
@@ -202,17 +202,84 @@ $(function() {
                     });
                     str1+='</tbody></table></div></div>';
                     $(str1).insertAfter('#formBusquedaPeli');
-                    //$('#resultadosBusquedaCD tr').click(obtenerDatos);
                     $('div.cabeceraMCU').click(function() {
                         $('#resultadosBusquedaMCU').slideToggle("slow");
                     });
                     $('#resultadosBusquedaMCU tbody tr').each(function(index,object) {
                         $(object).click(function() {
-                            alert($(this).find('td.expediente').text());
+                            var numexp = $(this).find('td.expediente').text();
+                            
+                            $('#formAgregarPeli input[name=numeroexp]').val(numexp);
                         });
                     });
                 }   
         },'json');
         }
-    })
+    });
+    $('#b_buscaIMDB').click(function() {
+        var buscar = $(this).parent().find('input[name=pelicula]').val();
+        if (buscar.length === 0) {
+             $('<p><div class="alert alert-error">\
+            <a class="close" data-dismiss="alert" href="#">&times;</a><strong>Error:</strong> Introduzca datos de búsqueda\
+            </div></p>')
+                .hide()
+                .insertAfter('#formBusquedaPeli')
+                .show('slow')
+                .fadeOut(2000, function() { $(this).remove(); });
+        }
+        else {
+            $.post('./php/imdb_titulo.php',"pelicula="+buscar,function(data){
+                if (data.data.results.length === 0) {
+                    //No hay resultados
+                    $('<p><div class="alert">\
+                    <a class="close" data-dismiss="alert" href="#">&times;</a>No hay resultados\
+                    </div></p>')
+                        .hide()
+                        .insertAfter('#formBusquedaPeli')
+                        .show('slow')
+                        .fadeOut(2000, function() { $(this).remove(); });
+                }
+                else {
+                    //Hay resultados
+                    $('#pestanhaIMDB').remove();
+                    var str1='<div id="pestanhaIMDB"><div class="cabeceraIMDB"><span>Resultados IMDB</span></div><table id="resultadosBusquedaIMDB" class="table table-bordered table-striped table-condensed">\
+                            <thead><tr><th>ID</th><th>Nombre</th><th>Año</th></tr></thead>\
+                            <tbody>';
+                    $.each(data.data.results[0].list,function(indexcat,result){
+                        if (result.type == "feature" || result.type == "video") {
+                            str1+='<tr>'+
+                                '<td class="id">'+result['tconst']+'</td>'+
+                                '<td class="nombre">'+result['title']+'</td>'+
+                                '<td class="anho">'+result['year']+'</td>'; 
+                        }
+                    })
+                    
+                    str1+='</tbody></table></div></div>';
+                    $(str1).insertAfter('#formBusquedaPeli');
+                    $('div.cabeceraIMDB').click(function() {
+                        $('#resultadosBusquedaIMDB').slideToggle("slow");
+                    });
+                    $('#resultadosBusquedaIMDB tbody tr').each(function(index,object) {
+                        $(object).click(function() {
+                            $.post('./php/imdb_tt.php',"tt="+$(this).find('td.id').text(),function(data){
+                                var titulo=$('#overview-top h1.header span.itemprop[itemprop=name]',data).text();  //Título
+                                var tituloorig=$('#overview-top h1.header span.title-extra[itemprop=name]',data).text().split('"')[1];  //Título Original
+                                var anho=$('#overview-top h1.header span.nobr a[href*=year]',data).text();       //Año
+                                var trama=$('#overview-top p[itemprop=description]',data).text().trim();          //Trama
+                                //Países: id, nombre para mostrar
+                                var paises=[];
+                                $('#titleDetails a[href*=country]', data).each(function(index,obj){ paises.push([$(obj).attr('href').split('/')[2].split('?')[0],$(obj).html()]) });
+                                
+                                
+                                //Agregamos al formulario
+                                $('#formAgregarPeli input[name=tituloespanhol]').val(titulo.trim())
+                                $('#formAgregarPeli input[name=titulooriginal]').val(tituloorig.trim())
+                                $('#formAgregarPeli input[name=anho]').val(anho.trim())
+                            });
+                        });
+                    });
+                }   
+        },'json');
+        }
+    });
 });

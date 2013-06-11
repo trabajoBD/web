@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://app.divshot.com/js/jquery.min.js"></script>
+    
     <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
     <script src="./js/jquery.scrollTo-min.js"></script>
     <script src="./js/funciones.js"></script>
@@ -39,23 +40,47 @@
       </div>
     </div>
     <div class="container">
-      <div class="page-header">
-        <h1>Añadir película</h1>
-      </div>
-      <p class="lead">Desde esta sección podrás añadir una película, la web utiliza como ayudante una consulta a una copia de la base de datos de películas calificadas del <i>Ministerio de educación, cultura y deporte</i> <a class="enlaceMCU" href="http://www.mcu.es/cine/CE/BBDDPeliculas/BBDDPeliculas_Index.html" target="_blank"><i class="icon-film"></i>MCU</a><br>
-      <span class="nota"><b>Nota:</b> El carácter wildcard es el porcentaje (%)</span></p>
-      <div class="row">
-        <div class="span12">
-            <div>
-            <form id="formBusquedaPeli" action="javascript: " class="inline-form">
-              <legend><h1>Formulario de búsqueda</h1></legend>
-                <input name="pelicula" class="span7" type="text" placeholder="Nombre de la película: Troya, El señor de los anillos..." >
-                <button id="b_buscaIMDB" type="button" class="btn btn-primary btn-large"> IMDB <i class="icon-search icon-white"></i></button>
-                <button id="b_buscaMCU" type="button" class="btn btn-primary btn-large"> MCU <i class="icon-search icon-white"></i></button>
-            </form>
+        <div class="page-header">
+            <h1>Añadir película</h1>
+        </div>
+        <p class="lead">Desde esta sección podrás añadir una película, la web utiliza como ayudante una consulta a una copia de la base de datos de películas calificadas del <i>Ministerio de educación, cultura y deporte</i> <a class="enlaceMCU" href="http://www.mcu.es/cine/CE/BBDDPeliculas/BBDDPeliculas_Index.html" target="_blank"><i class="icon-film"></i>MCU</a><br>
+        <span class="nota"><b>Nota:</b> El carácter wildcard es el porcentaje (%) para <i>MCU</i></span></p>
+        <div class="row">
+          <div class="span12">
+                <div>
+                    <form id="formBusquedaPeli" action="javascript: " class="inline-form">
+                        <legend><h1>Formulario de búsqueda</h1></legend>
+                        <input name="pelicula" class="span9" type="text" placeholder="Nombre de la película: Troya, El señor de los anillos..." >
+                        <button id="b_buscaIMDB" type="button" class="btn btn-primary btn-large"> IMDB <i class="icon-search icon-white"></i></button>
+                        <button id="b_buscaMCU" type="button" class="btn btn-primary btn-large"> MCU <i class="icon-search icon-white"></i></button>
+                    </form>
+                </div>
+                <div>
+                  <form id="formAgregarPeli" action="javascript: " class="inline-form">
+                            <legend><h1>Formulario de inserción</h1></legend>
+                        <div class="span5">
+                            <input name="tituloespanhol" class="span5" type="text" placeholder="Título español">
+                            <input name="titulooriginal" class="span5" type="text" placeholder="Título original">
+                            <input name="anho" class="span5" type="text" placeholder="Año">
+                            <input name="numeroexp" class="span5" type="text" placeholder="Número de expediente (MCU)">
+                            <input name="clasificacionedad" class="span5" type="text" placeholder="Clasificación por edades (MCU)">
+                            <label for="fechainiciocalif" class="span2">Fecha inicio calificación</label><input name="fechainiciocalif" class="span3" type="date">
+                            <label for="fechainiciocalif" class="span2">Fecha fin calificación</label><input name="fechafincalif" class="span3" type="date">
+                            <input name="duracion" class="span5" type="text" placeholder="Duración (minutos)">
+                            <input name="idioma" class="span5" type="text" placeholder="Idioma">
+                            <input name="tiposonido" class="span5" type="text" placeholder="Tipo de sonido">
+                            <input name="tipovideo" class="span5" type="text" placeholder="Tipo de vídeo">
+                            <input name="relacionaspecto" class="span5" type="text" placeholder="Relación de aspecto">
+                        </div>
+                        <div class="span5">
+                            <input name="imagen" class="span5" type="text" placeholder="Enlace de imagen">
+                            <input name="trailer" class="span5" type="text" placeholder="Enlace de trailer">
+                            <input name="paises" class="span5" type="text" placeholder="Países">
+                        </div>
+                  </form>
+              </div>
           </div>
         </div>
-      </div>
     </div>
 
   </body>

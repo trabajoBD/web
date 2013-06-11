@@ -62,10 +62,16 @@ span.nota {
 	font-style: italic;
 }
 div.cabeceraMCU {
-	height: 63px;
 	background-image: url('../img/img_MinisterioCultura.gif');
-	background-repeat: no-repeat;
 	background-color: rgb(247,205,25);
+}
+div.cabeceraIMDB {
+	background-image: url('../img/IMDb-Logo.jpg');
+	background-color: rgb(2,2,10);
+}
+div.cabeceraMCU, div.cabeceraIMDB {
+	height: 63px;
+	background-repeat: no-repeat;
 	margin: 0;
 	padding: 0;
 	-webkit-border-top-left-radius: 10px;
@@ -81,10 +87,19 @@ div.cabeceraMCU {
 div.cabeceraMCU span {
 	text-shadow: 0px 1px 1px #4d4d4d;
 	color: #222;
+}
+div.cabeceraIMDB span {
+	text-shadow: 0px 1px 1px #f0f0f0;
+	color: #fff;
+}
+div.cabeceraMCU span, div.cabeceraIMDB span {
 	font: large 'LeagueGothicRegular';
 	vertical-align: middle;
 	margin: 0 20px 0 0;
 }
 #resultadosBusquedaMCU tbody tr {
+	cursor: pointer;
+}
+#resultadosBusquedaIMDB tbody tr {
 	cursor: pointer;
 }
