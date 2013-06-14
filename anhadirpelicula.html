@@ -59,7 +59,7 @@
                 <div>
                   <form id="formAgregarPeli" action="javascript: " class="inline-form">
                             <legend><h1>Formulario de inserción</h1></legend>
-                        <div class="span5">
+                        <div class="span5"><fieldset><legend>Datos generales</legend>
                             <label for="tituloespanhol" class="span2">Título español</label><input name="tituloespanhol" class="span3" type="text" placeholder="Título español">
                             <label for="titulooriginal" class="span2">Título original</label><input name="titulooriginal" class="span3" type="text" placeholder="Título original">
                             <label for="anho" class="span2">Año</label><input name="anho" class="span3" type="text" placeholder="Año">
@@ -72,10 +72,12 @@
                             <label for="tiposonido" class="span2">Tipo de sonido</label><input name="tiposonido" class="span3" type="text" placeholder="Tipo de sonido">
                             <label for="tipovideo" class="span2">Tipo de vídeo</label><input name="tipovideo" class="span3" type="text" placeholder="Tipo de vídeo">
                             <label for="relacionaspecto" class="span2">Relación de aspecto</label><input name="relacionaspecto" class="span3" type="text" placeholder="Relación de aspecto">
-                        </div>
-                        <div class="span5">
+                        </fieldset><fieldset><legend>Multimedia</legend>
                             <label for="imagen" class="span2">Enlace de imagen</label><input name="imagen" class="span3" type="text" placeholder="Enlace de imagen">
                             <label for="trailer" class="span2">Enlace de trailer</label><input name="trailer" class="span3" type="text" placeholder="Enlace de trailer">
+                            </fieldset>
+                        </div>
+                        <div class="span5">
                             <table id="paisespeli" class="table table-bordered table-striped table-condensed">
                                 <legend>Países</legend>
                                 <thead><tr><td>País</td></tr></thead>
@@ -87,6 +89,26 @@
                                     <tr>
                                         <td class="selectpais">
                                             <a href="#" data-type="select" data-pk="1" data-value="af" data-original-title="Selecciona país" class="editable editable-click" style="display: inline;">Afghanistan</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="span5">
+                            <table id="castingpeli" class="table table-bordered table-striped table-condensed">
+                                <legend>Casting</legend>
+                                <thead><tr><td>Nombre</td><td>Rol</td></tr></thead>
+                                <tfoot><tr><td class="tdcentrado" colspan="2">
+                                    <button id="anhadefilacasting" type="button" class="btn"> Añadir fila <i class="icon-plus"></i></button>
+                                    <button id="quitafilacasting" type="button" class="btn"> Quitar última fila <i class="icon-minus"></i></button>
+                                </td></tr></tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td class="nombrecasting">
+                                            <a href="#" data-type="text" data-value="" class="editable editable-click" style="display: inline;"></a>
+                                        </td>
+                                        <td class="rolcasting">
+                                            <a href="#" data-type="text" class="editable editable-click" style="display: inline;"></a>
                                         </td>
                                     </tr>
                                 </tbody>

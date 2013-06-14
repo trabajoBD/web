@@ -313,7 +313,7 @@ $(function() {
                         <a href="#" data-type="select" data-pk="1" data-value="af" data-original-title="Selecciona país" class="editable editable-click" style="display: inline;">Afghanistan</a>\
                     </td>\
                 </tr>';
-                $(str1).insertAfter('#paisespeli tbody tr:last-of-type');
+                $(str1).appendTo('#paisespeli tbody');
                 $('#paisespeli tbody tr:last-of-type a').editable({
                     value: "af",
                     source: paises,
@@ -325,5 +325,20 @@ $(function() {
             });
         },"json");
     })
-    
+    $('#castingpeli a').editable();
+    $('#anhadefilacasting').click(function() {
+        var str1 = '<tr>\
+            <td class="nombrecasting">\
+                <a href="#" data-type="text" data-value="" class="editable editable-click" style="display: inline;"></a>\
+            </td>\
+            <td class="rolcasting">\
+                <a href="#" data-type="text" class="editable editable-click" style="display: inline;"></a>\
+            </td>\
+        </tr>';
+        $(str1).appendTo('#castingpeli tbody');
+        $('#castingpeli tbody tr:last-of-type a').editable();
+    });
+    $('#quitafilacasting').click(function() {
+        $('#castingpeli tbody tr:last-of-type').remove();
+    });
 });
