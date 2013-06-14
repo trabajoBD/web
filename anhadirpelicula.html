@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap.css">
     <link rel="stylesheet" href="https://app.divshot.com/css/bootstrap-responsive.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://app.divshot.com/js/jquery.min.js"></script>
-    
     <script src="https://app.divshot.com/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.4.4/bootstrap-editable/js/bootstrap-editable.min.js"></script>
     <script src="./js/jquery.scrollTo-min.js"></script>
     <script src="./js/funciones.js"></script>
     
@@ -59,23 +60,37 @@
                   <form id="formAgregarPeli" action="javascript: " class="inline-form">
                             <legend><h1>Formulario de inserción</h1></legend>
                         <div class="span5">
-                            <input name="tituloespanhol" class="span5" type="text" placeholder="Título español">
-                            <input name="titulooriginal" class="span5" type="text" placeholder="Título original">
-                            <input name="anho" class="span5" type="text" placeholder="Año">
-                            <input name="numeroexp" class="span5" type="text" placeholder="Número de expediente (MCU)">
-                            <input name="clasificacionedad" class="span5" type="text" placeholder="Clasificación por edades (MCU)">
+                            <label for="tituloespanhol" class="span2">Título español</label><input name="tituloespanhol" class="span3" type="text" placeholder="Título español">
+                            <label for="titulooriginal" class="span2">Título original</label><input name="titulooriginal" class="span3" type="text" placeholder="Título original">
+                            <label for="anho" class="span2">Año</label><input name="anho" class="span3" type="text" placeholder="Año">
+                            <label for="numeroexp" class="span2">Número de expediente</label><input name="numeroexp" class="span3" type="text" placeholder="Número de expediente (MCU)">
+                            <label for="numeroexp" class="span2">Calificación por edades</label><input name="clasificacionedad" class="span3" type="text" placeholder="Clasificación por edades (MCU)">
                             <label for="fechainiciocalif" class="span2">Fecha inicio calificación</label><input name="fechainiciocalif" class="span3" type="date">
                             <label for="fechainiciocalif" class="span2">Fecha fin calificación</label><input name="fechafincalif" class="span3" type="date">
-                            <input name="duracion" class="span5" type="text" placeholder="Duración (minutos)">
-                            <input name="idioma" class="span5" type="text" placeholder="Idioma">
-                            <input name="tiposonido" class="span5" type="text" placeholder="Tipo de sonido">
-                            <input name="tipovideo" class="span5" type="text" placeholder="Tipo de vídeo">
-                            <input name="relacionaspecto" class="span5" type="text" placeholder="Relación de aspecto">
+                            <label for="duracion" class="span2">Duración</label><input name="duracion" class="span3" type="number" placeholder="Duración (minutos)">
+                            <label for="idioma" class="span2">Idioma</label><input name="idioma" class="span3" type="text" placeholder="Idioma">
+                            <label for="tiposonido" class="span2">Tipo de sonido</label><input name="tiposonido" class="span3" type="text" placeholder="Tipo de sonido">
+                            <label for="tipovideo" class="span2">Tipo de vídeo</label><input name="tipovideo" class="span3" type="text" placeholder="Tipo de vídeo">
+                            <label for="relacionaspecto" class="span2">Relación de aspecto</label><input name="relacionaspecto" class="span3" type="text" placeholder="Relación de aspecto">
                         </div>
                         <div class="span5">
-                            <input name="imagen" class="span5" type="text" placeholder="Enlace de imagen">
-                            <input name="trailer" class="span5" type="text" placeholder="Enlace de trailer">
-                            <input name="paises" class="span5" type="text" placeholder="Países">
+                            <label for="imagen" class="span2">Enlace de imagen</label><input name="imagen" class="span3" type="text" placeholder="Enlace de imagen">
+                            <label for="trailer" class="span2">Enlace de trailer</label><input name="trailer" class="span3" type="text" placeholder="Enlace de trailer">
+                            <table id="paisespeli" class="table table-bordered table-striped table-condensed">
+                                <legend>Países</legend>
+                                <thead><tr><td>País</td></tr></thead>
+                                <tfoot><tr><td class="tdcentrado" colspan="2">
+                                    <button id="anhadefilapais" type="button" class="btn"> Añadir fila <i class="icon-plus"></i></button>
+                                    <button id="quitafilapais" type="button" class="btn"> Quitar última fila <i class="icon-minus"></i></button>
+                                </td></tr></tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td class="selectpais">
+                                            <a href="#" data-type="select" data-pk="1" data-value="af" data-original-title="Selecciona país" class="editable editable-click" style="display: inline;">Afghanistan</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                   </form>
               </div>

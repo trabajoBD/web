@@ -208,8 +208,17 @@ $(function() {
                     $('#resultadosBusquedaMCU tbody tr').each(function(index,object) {
                         $(object).click(function() {
                             var numexp = $(this).find('td.expediente').text();
+                            var fcalif1 = $(this).find('td.fcalif1').text();
+                            var fcalif2 = $(this).find('td.fcalif2').text();
+                            var calif = $(this).find('td.calif').text();
                             
-                            $('#formAgregarPeli input[name=numeroexp]').val(numexp);
+                            try { $('#formAgregarPeli input[name=numeroexp]').val(numexp);                     } catch(e) { };
+                            try { $('#formAgregarPeli input[name=fechainiciocalif]').val(fcalif1);             } catch(e) { };
+                            try { $('#formAgregarPeli input[name=fechafincalif]').val(fcalif2);                } catch(e) { };
+                            try { $('#formAgregarPeli input[name=clasificacionedad]').val(calif);              } catch(e) { };
+                            
+                            
+                            $('#resultadosBusquedaMCU').slideToggle("slow");
                         });
                     });
                 }   
@@ -263,18 +272,24 @@ $(function() {
                         $(object).click(function() {
                             $.post('./php/imdb_tt.php',"tt="+$(this).find('td.id').text(),function(data){
                                 var titulo=$('#overview-top h1.header span.itemprop[itemprop=name]',data).text();  //Título
-                                var tituloorig=$('#overview-top h1.header span.title-extra[itemprop=name]',data).text().split('"')[1];  //Título Original
+                                var tituloorig=$('#overview-top h1.header span.title-extra[itemprop=name]',data).text();  //Título Original
                                 var anho=$('#overview-top h1.header span.nobr a[href*=year]',data).text();       //Año
-                                var trama=$('#overview-top p[itemprop=description]',data).text().trim();          //Trama
+                                var trama=$('#overview-top p[itemprop=description]',data).text();          //Trama
                                 //Países: id, nombre para mostrar
                                 var paises=[];
                                 $('#titleDetails a[href*=country]', data).each(function(index,obj){ paises.push([$(obj).attr('href').split('/')[2].split('?')[0],$(obj).html()]) });
+                                var duracion=$($('#titleDetails time[itemprop=duration]',data)[0]).text();
+                                var relaspecto=$('h4:contains("Aspect Ratio")',data);                    
                                 
                                 
                                 //Agregamos al formulario
-                                $('#formAgregarPeli input[name=tituloespanhol]').val(titulo.trim())
-                                $('#formAgregarPeli input[name=titulooriginal]').val(tituloorig.trim())
-                                $('#formAgregarPeli input[name=anho]').val(anho.trim())
+                                try { $('#formAgregarPeli input[name=tituloespanhol]').val(titulo.trim())                                                                } catch(e){}
+                                try { $('#formAgregarPeli input[name=titulooriginal]').val(tituloorig.split('"')[1].trim())                                              } catch(e){}
+                                try { $('#formAgregarPeli input[name=anho]').val(anho.trim())                                                                            } catch(e){}
+                                try { $('#formAgregarPeli input[name=duracion]').val(duracion.split(' ')[0].trim())                                                      } catch(e){}
+                                try { $('#formAgregarPeli input[name=relacionaspecto]').val(relaspecto.parent().text().trim().replace("Aspect Ratio: ",""))                   } catch(e){}
+                                
+                                $('#resultadosBusquedaIMDB').slideToggle("slow");
                             });
                         });
                     });
@@ -282,4 +297,33 @@ $(function() {
         },'json');
         }
     });
+    $.fn.editable.defaults.mode = 'inline';
+    paises = [];
+    $('#paisespeli').ready(function() {
+        $.get("./php/paises.php",function(data) {
+            paises = data;
+            $('td.selectpais .editable').editable({
+                value: 1,
+                source: paises,
+                showbuttons: false
+            });
+            $('#anhadefilapais').click(function() {
+                var str1 = '<tr>\
+                    <td class="selectpais">\
+                        <a href="#" data-type="select" data-pk="1" data-value="af" data-original-title="Selecciona país" class="editable editable-click" style="display: inline;">Afghanistan</a>\
+                    </td>\
+                </tr>';
+                $(str1).insertAfter('#paisespeli tbody tr:last-of-type');
+                $('#paisespeli tbody tr:last-of-type a').editable({
+                    value: "af",
+                    source: paises,
+                    showbuttons: false
+                });
+            });
+            $('#quitafilapais').click(function() {
+                $('#paisespeli tbody tr:last-of-type').remove();
+            });
+        },"json");
+    })
+    
 });
