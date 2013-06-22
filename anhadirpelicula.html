@@ -67,6 +67,7 @@
                             <label for="numeroexp" class="span2">Calificación por edades</label><input name="clasificacionedad" class="span3" type="text" placeholder="Clasificación por edades (MCU)">
                             <label for="fechainiciocalif" class="span2">Fecha inicio calificación</label><input name="fechainiciocalif" class="span3" type="date">
                             <label for="fechainiciocalif" class="span2">Fecha fin calificación</label><input name="fechafincalif" class="span3" type="date">
+                            <label for="distribuidora" class="span2">Distribuidora</label><input name="distribuidora" class="span3" type="text" placeholder="Distribuidora de la película">
                             <label for="duracion" class="span2">Duración</label><input name="duracion" class="span3" type="number" placeholder="Duración (minutos)">
                             <label for="idioma" class="span2">Idioma</label><input name="idioma" class="span3" type="text" placeholder="Idioma">
                             <label for="tiposonido" class="span2">Tipo de sonido</label><input name="tiposonido" class="span3" type="text" placeholder="Tipo de sonido">
@@ -113,6 +114,10 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="form-actions span12">
+                            <button type="submit" class="btn btn-primary btn-large span3" id="guardarCambios">Guardar cambios <i class="icon-pencil icon-white"></i></button>
+                            <button class="btn btn-warning btn-large span3" id="resetearFormulario">Resetear formulario <i class="icon-fast-backward icon-white"></i></button>
                         </div>
                   </form>
               </div>

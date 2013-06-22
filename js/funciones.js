@@ -113,7 +113,41 @@ enviarDisco = function() {
         $('#guardarCambios').attr("disabled", false);
     });
 }
-
+enviarPeli = function() {
+    var datosEnvio = new Object;
+    //Campos tabla 'video'
+    datosEnvio['trailer'] = $('#formAgregarPeli input[name=trailer]').val();
+    datosEnvio['tituloespanhol'] = $('#formAgregarPeli input[name=tituloespanhol]').val();
+    datosEnvio['titulooriginal'] = $('#formAgregarPeli input[name=titulooriginal]').val();
+    datosEnvio['idioma'] = $('#formAgregarPeli input[name=idioma]').val();
+    datosEnvio['tiposonido'] = $('#formAgregarPeli input[name=tiposonido]').val();
+    datosEnvio['distribuidora'] = $('#formAgregarPeli input[name=distribuidora]').val();
+    datosEnvio['tipovideo'] = $('#formAgregarPeli input[name=tipovideo]').val();
+    datosEnvio['calificacionedad'] = $('#formAgregarPeli input[name=calificacionedad]').val();
+    datosEnvio['relacionaspecto'] = $('#formAgregarPeli input[name=relacionaspecto]').val();
+    datosEnvio['numeroexp'] = $('#formAgregarPeli input[name=numeroexp]').val();
+    datosEnvio['fechainiciocalif'] = $('#formAgregarPeli input[name=fechainiciocalif]').val();
+    datosEnvio['fechafincalif'] = $('#formAgregarPeli input[name=fechafincalif]').val();
+    datosEnvio['anho'] = $('#formAgregarPeli input[name=anho]').val();
+    //Campos tabla 'videopais'
+    datosEnvio['arrayPaises'] = [];
+    $('#formAgregarPeli td.selectpais a').each( function(index,obj) {
+        datosEnvio['arrayPaises'].push($(obj).editable('getValue').undefined);
+    });
+    //Campos tabla 'reparto'
+    datosEnvio['arrayReparto'] = [];
+    $('#formAgregarPeli table#castingpeli tbody tr').each( function(index,obj) {
+        datosEnvio['arrayReparto'].push([$(obj).attr('imdbid'),
+                                         $(obj).attr('tipo'),
+                                         $($(obj).find('a')[0]).editable('getValue').undefined,
+                                         $($(obj).find('a')[1]).editable('getValue').undefined
+                                         ]);
+    });
+    $('#guardarCambios').attr("disabled", true);
+    $.post('./php/insertarPelicula.php',datosEnvio,function(data) {
+        $('#guardarCambios').attr("disabled", false);
+    });
+}
 $(function() {
     $('#anhadirPista').click(function () {
         $('<div class="controls well reseteable">\
@@ -129,9 +163,9 @@ $(function() {
         if ($('.numeroTrack').size() > 1) $('.numeroTrack').last().parent().remove();
     })
     $('#resetearFormulario').click(function() {
-        $('#formIntrod').reset()
+        $(this).closest("form").reset()
     });
-    $('#guardarCambios').click(enviarDisco);
+    $('#formIntrod #guardarCambios').click(enviarDisco);
     $('#ultimosCds').each(function() {
         $.get('./php/ultimosDiscos.php',function(data) {
             obj = $.parseJSON(data);
@@ -211,11 +245,13 @@ $(function() {
                             var fcalif1 = $(this).find('td.fcalif1').text();
                             var fcalif2 = $(this).find('td.fcalif2').text();
                             var calif = $(this).find('td.calif').text();
+                            var distribuidora = $(this).find('td.distr').text();
                             
                             try { $('#formAgregarPeli input[name=numeroexp]').val(numexp);                     } catch(e) { };
                             try { $('#formAgregarPeli input[name=fechainiciocalif]').val(fcalif1);             } catch(e) { };
                             try { $('#formAgregarPeli input[name=fechafincalif]').val(fcalif2);                } catch(e) { };
                             try { $('#formAgregarPeli input[name=clasificacionedad]').val(calif);              } catch(e) { };
+                            try { $('#formAgregarPeli input[name=distribuidora]').val(distribuidora);              } catch(e) { };
                             
                             
                             $('#resultadosBusquedaMCU').slideToggle("slow");
@@ -277,17 +313,41 @@ $(function() {
                                 var trama=$('#overview-top p[itemprop=description]',data).text();          //Trama
                                 //Países: id, nombre para mostrar
                                 var paises=[];
-                                $('#titleDetails a[href*=country]', data).each(function(index,obj){ paises.push([$(obj).attr('href').split('/')[2].split('?')[0],$(obj).html()]) });
+                                $('h4:contains("Country")',data).parent().find('a').each(function(index,obj){
+                                    paises.push([$(obj).attr('href').split('/')[2].split('?')[0],$(obj).html()])
+                                });
                                 var duracion=$($('#titleDetails time[itemprop=duration]',data)[0]).text();
-                                var relaspecto=$('h4:contains("Aspect Ratio")',data);                    
-                                
-                                
+                                var relaspecto=$('h4:contains("Aspect Ratio")',data);
+                                var casting=[];
+                                $('table.cast_list tr.odd, table.cast_list tr.even',data).each(function(index,obj){
+                                    casting.push([$(obj).find('a').attr('href').split('/')[2].replace('nm',''),
+                                                  1,
+                                                  $(obj).find('a span[itemprop="name"]').text(),
+                                                  "Actor"]);
+                                });
+                                var imagen=$('#img_primary img',data)
+                                var video=($('#combined-videos a:first-of-type',data).attr('href')?['http://www.imdb.com',$('#combined-videos a:first-of-type',data).attr('href')].join(''):'');
+                                var tiposonido=$('h4:contains("Sound Mix:")',data);
                                 //Agregamos al formulario
                                 try { $('#formAgregarPeli input[name=tituloespanhol]').val(titulo.trim())                                                                } catch(e){}
                                 try { $('#formAgregarPeli input[name=titulooriginal]').val(tituloorig.split('"')[1].trim())                                              } catch(e){}
                                 try { $('#formAgregarPeli input[name=anho]').val(anho.trim())                                                                            } catch(e){}
                                 try { $('#formAgregarPeli input[name=duracion]').val(duracion.split(' ')[0].trim())                                                      } catch(e){}
-                                try { $('#formAgregarPeli input[name=relacionaspecto]').val(relaspecto.parent().text().trim().replace("Aspect Ratio: ",""))                   } catch(e){}
+                                try { $('#formAgregarPeli input[name=relacionaspecto]').val(relaspecto.parent().text().trim().replace("Aspect Ratio: ",""))              } catch(e){}
+                                $('#paisespeli tbody tr').remove();
+                                try { $(paises).each(function(index,obj) {
+                                        $('#anhadefilapais').trigger('click');  //Añadimos fila
+                                        $('#paisespeli tr:last-of-type a').editable('setValue',obj[0]);                                                                  })} catch(e) {}
+                                $('#castingpeli tbody tr').remove();
+                                try { $(casting).each(function(index,obj) {
+                                        $('#anhadefilacasting').trigger('click');  //Añadimos fila
+                                        $($('#castingpeli tr:last-of-type a')[0]).editable('setValue',obj[2]); 
+                                        $($('#castingpeli tr:last-of-type a')[1]).editable('setValue',obj[3]);
+                                        $('#castingpeli tr:last-of-type').attr('imdbid',obj[0]);
+                                        $('#castingpeli tr:last-of-type').attr('tipo',obj[1]);                                                                            })} catch(e) {}
+                                try { $('#formAgregarPeli input[name=imagen]').val($(imagen).attr('src'))                                                                            } catch(e){}
+                                try { $('#formAgregarPeli input[name=trailer]').val(video)                                                                            } catch(e){}
+                                try { $('#formAgregarPeli input[name=tiposonido]').val($(tiposonido).next().text())                                                                            } catch(e){}
                                 
                                 $('#resultadosBusquedaIMDB').slideToggle("slow");
                             });
@@ -341,4 +401,5 @@ $(function() {
     $('#quitafilacasting').click(function() {
         $('#castingpeli tbody tr:last-of-type').remove();
     });
+    $('#formAgregarPeli #guardarCambios').click(enviarPeli);
 });
