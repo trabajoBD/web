@@ -1,12 +1,12 @@
 <?php
     //Inserta un disco en la base de datos
+    include_once('mysqlConectar.php');
     $artista = $_POST['artista'];
     $album = $_POST['album'];
     $anho = $_POST['anho'];
     $duracion = $_POST['duracion'];
     $genero = $_POST['genero'];
     $arrayTracks = $_POST['arrayTracks'];
-    $mysqli = new mysqli("localhost", "frasolmun", "OdsLxOdR7CJGu2z7hy4p", "frasolmun");
     //Artículo
     $query= "INSERT INTO `articulo`(`nombre`, `descripcion`, `preciooffline`, `precioonline`, `disponibleonline`, `disponibleoffline`, `imagen`) VALUES ".
             "('".mysqli_real_escape_string($mysqli,$artista)." - ".mysqli_real_escape_string($mysqli,$album)."','',0,0,0,0,'')";

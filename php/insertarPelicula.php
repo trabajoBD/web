@@ -1,6 +1,6 @@
 <?php
     //Inserta una película en la base de datos
-    $mysqli = new mysqli("localhost", "frasolmun", "OdsLxOdR7CJGu2z7hy4p", "frasolmun");
+    include_once('mysqlConectar.php');
     $trailer                = mysqli_real_escape_string($mysqli,$_POST['trailer']);
     $tituloespanhol         = mysqli_real_escape_string($mysqli,$_POST['tituloespanhol']);
     $duracion               = mysqli_real_escape_string($mysqli,$_POST['duracion']);

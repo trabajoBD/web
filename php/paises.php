@@ -1,6 +1,5 @@
 <?php
-    $mysqli = new mysqli("localhost", "frasolmun", "OdsLxOdR7CJGu2z7hy4p", "frasolmun");
-    $mysqli->set_charset("utf8");
+    include_once('mysqlConectar.php');
     $query = "SELECT idpais AS 'value', nombrepais AS 'text' FROM `pais` ORDER BY nombrepais";
     $res=$mysqli->query($query);
     $paises = [];
