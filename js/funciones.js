@@ -119,6 +119,7 @@ enviarPeli = function() {
     datosEnvio['trailer'] = $('#formAgregarPeli input[name=trailer]').val();
     datosEnvio['tituloespanhol'] = $('#formAgregarPeli input[name=tituloespanhol]').val();
     datosEnvio['titulooriginal'] = $('#formAgregarPeli input[name=titulooriginal]').val();
+    datosEnvio['duracion'] = $('#formAgregarPeli input[name=duracion]').val();
     datosEnvio['idioma'] = $('#formAgregarPeli input[name=idioma]').val();
     datosEnvio['tiposonido'] = $('#formAgregarPeli input[name=tiposonido]').val();
     datosEnvio['distribuidora'] = $('#formAgregarPeli input[name=distribuidora]').val();
@@ -250,7 +251,7 @@ $(function() {
                             try { $('#formAgregarPeli input[name=numeroexp]').val(numexp);                     } catch(e) { };
                             try { $('#formAgregarPeli input[name=fechainiciocalif]').val(fcalif1);             } catch(e) { };
                             try { $('#formAgregarPeli input[name=fechafincalif]').val(fcalif2);                } catch(e) { };
-                            try { $('#formAgregarPeli input[name=clasificacionedad]').val(calif);              } catch(e) { };
+                            try { $('#formAgregarPeli input[name=calificacionedad]').val(calif);              } catch(e) { };
                             try { $('#formAgregarPeli input[name=distribuidora]').val(distribuidora);              } catch(e) { };
                             
                             
